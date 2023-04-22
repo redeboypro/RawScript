@@ -10,11 +10,14 @@ namespace RawScriptDemo
         {
             var locals = new Dictionary<string, object>();
             var evaluator = new Evaluator();
+            var terminal = new Output();
             var statement = new Statement(locals,@"
-
+var a;
+let a = 2;
+print a * 23;
 ");
             statement.Invoke();
-            Console.WriteLine(locals["A"]);
+            Console.WriteLine(terminal[0]);
         }
     }
 }

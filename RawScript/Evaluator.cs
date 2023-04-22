@@ -21,8 +21,6 @@ namespace RawScript
         private readonly Dictionary<int, int> OrTokens;
         private readonly Dictionary<int, int> XorTokens;
 
-        public static Evaluator Instance;
-
         public Evaluator()
         {
             MultiplicationTokens = new Dictionary<int, int>();
@@ -41,6 +39,8 @@ namespace RawScript
 
             Instance = this;
         }
+
+        public static Evaluator Instance { get; private set; }
 
         public object Evaluate(string expression)
         {

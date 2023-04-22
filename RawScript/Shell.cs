@@ -29,6 +29,8 @@ namespace RawScript
     
     public static class Shell
     {
+        public const string Print = "print";
+        
         public const char TokenSeparator = ' ';
         public const string DeclarationSeparator = ";";
 

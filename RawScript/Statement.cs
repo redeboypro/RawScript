@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using RawScript.Statements;
 
 namespace RawScript
@@ -21,11 +22,36 @@ namespace RawScript
             var bracketsCount = 0;
 
             var evaluator = Evaluator.Instance;
+            var terminal = Output.Instance;
 
             for (var tokenIndex = 0; tokenIndex < tokens.Length; tokenIndex++)
             {
                 var token = tokens[tokenIndex];
-                
+
+                if (token == Shell.Print)
+                {
+                    var outputTokens = new List<string>();
+                    tokenIndex++;
+                    token = tokens[tokenIndex];
+                    while (token != Shell.DeclarationSeparator)
+                    {
+                        outputTokens.Add(token);
+                        token = tokens[++tokenIndex];
+                    }
+
+                    var output = outputTokens.JoinTokens();
+
+                    void Print(IReadOnlyDictionary<string, object> inputVariables)
+                    {
+                        if (evaluator != null)
+                        {
+                            terminal?.Print(evaluator.Evaluate(ReplacePlaceholders(inputVariables, output)));
+                        }
+                    }
+                    
+                    invokables.Add(new Operation(ref variables, Print));
+                }
+
                 if (token == Shell.BeginStatement)
                 {
                     var beginingIndex = tokenIndex - 1;
@@ -78,7 +104,12 @@ namespace RawScript
                     
                     bool ConditionCheck(IReadOnlyDictionary<string, object> inputVariables)
                     {
-                        return (bool) evaluator.Evaluate(ReplacePlaceholders(inputVariables, condition));
+                        if (evaluator != null)
+                        {
+                            return (bool) evaluator.Evaluate(ReplacePlaceholders(inputVariables, condition));
+                        }
+
+                        return false;
                     }
                     
                     switch (statementType)
@@ -150,6 +181,11 @@ namespace RawScript
         private static OperationFunction TraceOperation(string local, string expression, OperationType operation)
         {
             var evaluator = Evaluator.Instance;
+
+            if (evaluator is null)
+            {
+                throw new Exception("Evaluator should be initialized before expression parsing");
+            }
 
             switch (operation)
             {
