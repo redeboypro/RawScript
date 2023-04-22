@@ -6,11 +6,11 @@ namespace RawScript
 {
     public delegate bool Condition(Dictionary<string, object> variables);
     
-    public class Statement
+    public class Function
     {
         protected readonly List<IInvokable> invokables;
 
-        public Statement(Dictionary<string, object> variables, string source)
+        public Function(Dictionary<string, object> variables, string source)
         {
             invokables = new List<IInvokable>();
             Trace(ref variables, source);
@@ -23,33 +23,47 @@ namespace RawScript
 
             var evaluator = Evaluator.Instance;
             var terminal = Output.Instance;
+            var engine = Engine.Instance;
 
             for (var tokenIndex = 0; tokenIndex < tokens.Length; tokenIndex++)
             {
                 var token = tokens[tokenIndex];
 
-                if (token == Shell.Print)
+                if (token.IsFunction(out var functionType))
                 {
-                    var outputTokens = new List<string>();
+                    var functionTokens = new List<string>();
                     tokenIndex++;
                     token = tokens[tokenIndex];
                     while (token != Shell.DeclarationSeparator)
                     {
-                        outputTokens.Add(token);
+                        functionTokens.Add(token);
                         token = tokens[++tokenIndex];
                     }
+                    var output = functionTokens.JoinTokens();
 
-                    var output = outputTokens.JoinTokens();
-
-                    void Print(IReadOnlyDictionary<string, object> inputVariables)
+                    switch (functionType)
                     {
-                        if (evaluator != null)
-                        {
-                            terminal?.Print(evaluator.Evaluate(ReplacePlaceholders(inputVariables, output)));
-                        }
+                        case FunctionType.Print:
+
+                            invokables.Add(new Operation(ref variables, inputVariables =>
+                            {
+                                if (evaluator != null)
+                                {
+                                    terminal?.Print(evaluator.Evaluate(ReplacePlaceholders(inputVariables, output)));
+                                }
+                            }));
+                            break;
+                        case FunctionType.Use:
+                            
+                            foreach (var function in functionTokens)
+                            {
+                                invokables.Add(new Operation(ref variables, inputVariables =>
+                                {
+                                    engine.GetFunction(function).Invoke();
+                                }));
+                            }
+                            break;
                     }
-                    
-                    invokables.Add(new Operation(ref variables, Print));
                 }
 
                 if (token == Shell.BeginStatement)
@@ -153,7 +167,7 @@ namespace RawScript
 
                             OperationType operation;
                             
-                            while (!Shell.IsOperator(localPlaceholder, out operation))
+                            while (!localPlaceholder.IsOperator(out operation))
                             {
                                 locals.Add(localPlaceholder);
                                 localPlaceholder = declarationTokens[++localIndex];

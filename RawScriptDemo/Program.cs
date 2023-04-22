@@ -7,21 +7,24 @@ namespace RawScriptDemo
 {
     internal class Program
     {
-        public const string FilePath = "test.rs";
+        public const string File1Path = "test1.rs";
+        public const string File2Path = "test2.rs";
         
         public static void Main(string[] args)
         {
-            var locals = new Dictionary<string, object>();
             var evaluator = new Evaluator();
             var terminal = new Output();
-            var statement = new Statement(locals, File.ReadAllText(FilePath));
-            statement.Invoke();
-            for (var line = 0; line < terminal.Length; line++)
+            var engine = new Engine();
+            
+            engine.LoadFromFile(File1Path);
+            engine.LoadFromFile(File2Path);
+            
+            engine.GetFunction(File2Path).Invoke();
+            
+            for (var i = 0; i < terminal.Length; i++)
             {
-                Console.WriteLine(terminal[line]);
+                Console.WriteLine(terminal[i]);
             }
-
-            while (true);
         }
     }
 }

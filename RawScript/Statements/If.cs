@@ -2,7 +2,7 @@
 
 namespace RawScript.Statements
 {
-    public class If : Statement, IInvokable
+    public class If : Function, IInvokable
     {
         private readonly Condition condition;
         private readonly Dictionary<string, object> variables;

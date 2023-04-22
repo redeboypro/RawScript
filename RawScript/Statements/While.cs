@@ -2,7 +2,7 @@
 
 namespace RawScript.Statements
 {
-    public class While : Statement, IInvokable
+    public class While : Function, IInvokable
     {
         private readonly Condition condition;
         private readonly Dictionary<string, object> variables;

@@ -8,6 +8,13 @@ namespace RawScript
         While,
         None
     }
+    
+    public enum FunctionType
+    {
+        Print,
+        Use,
+        None
+    }
 
     public enum DeclarationType
     {
@@ -29,8 +36,6 @@ namespace RawScript
     
     public static class Shell
     {
-        public const string Print = "print";
-        
         public const char TokenSeparator = ' ';
         public const string DeclarationSeparator = ";";
 
@@ -39,6 +44,9 @@ namespace RawScript
 
         public const string BeginStatement = "{";
         public const string EndStatement = "}";
+        
+        private const string Use = "use";
+        private const string Print = "print";
         
         private const string VariableDeclaration = "var";
         private const string OperationDeclaration = "let";
@@ -52,7 +60,7 @@ namespace RawScript
         private const string Add = "+";
         private const string Subtract = "-";
 
-        public static bool IsOperator(string source, out OperationType operation)
+        public static bool IsOperator(this string source, out OperationType operation)
         {
             operation = OperationType.None;
             
@@ -106,6 +114,23 @@ namespace RawScript
                     return true;
                 case OperationDeclaration :
                     declarationType = DeclarationType.Operation;
+                    return true;
+            }
+
+            return false;
+        }
+        
+        public static bool IsFunction(this string source, out FunctionType functionType)
+        {
+            functionType = FunctionType.None;
+            
+            switch (source)
+            {
+                case Print :
+                    functionType = FunctionType.Print;
+                    return true;
+                case Use :
+                    functionType = FunctionType.Use;
                     return true;
             }
 
