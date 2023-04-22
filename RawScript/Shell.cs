@@ -38,17 +38,17 @@ namespace RawScript
         public const string BeginStatement = "{";
         public const string EndStatement = "}";
         
-        public const string VariableDeclaration = "var";
-        public const string OperationDeclaration = "let";
+        private const string VariableDeclaration = "var";
+        private const string OperationDeclaration = "let";
         
-        public const string If = "if";
-        public const string While = "while";
+        private const string If = "if";
+        private const string While = "while";
         
-        public const string Equalize = "=";
-        public const string Multiply = "*";
-        public const string Divide = "/";
-        public const string Add = "+";
-        public const string Subtract = "-";
+        private const string Equalize = "=";
+        private const string Multiply = "*";
+        private const string Divide = "/";
+        private const string Add = "+";
+        private const string Subtract = "-";
 
         public static bool IsOperator(string source, out OperationType operation)
         {

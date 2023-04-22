@@ -207,19 +207,6 @@ namespace RawScript
             return resultTokens.JoinTokens();
         }
 
-        private static StatementType GetStatementType(string source)
-        {
-            switch (source)
-            {
-                case Shell.If :
-                    return StatementType.If;
-                case Shell.While :
-                    return StatementType.While;
-            }
-
-            return StatementType.None;
-        }
-
         public virtual void Invoke()
         {
             foreach (var invokable in invokables)

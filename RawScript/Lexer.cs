@@ -25,34 +25,7 @@ namespace RawScript
 
             return false;
         }
-        
-        public static string[] SeparateLine(string source)
-        {
-            var tokenList = new List<string>();
-            var symIndex = 0;
-            while (symIndex < source.Length)
-            {
-                var sym = source[symIndex];
-                if (sym != Shell.TokenSeparator)
-                {
-                    var token = new StringBuilder();
-                    while (sym != Shell.TokenSeparator && symIndex < source.Length)
-                    {
-                        token.Append(sym);
-                        symIndex++;
-                        if (symIndex < source.Length)
-                        {
-                            sym = source[symIndex];
-                        }
-                    }
-                    tokenList.Add(token.ToString());
-                }
-                symIndex++;
-            }
 
-            return tokenList.ToArray();
-        }
-        
         public static string[] Separate(string source)
         {
             var tokenStringBuilder = new StringBuilder();
