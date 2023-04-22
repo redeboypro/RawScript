@@ -15,6 +15,10 @@ namespace RawScript
                 case '%' :
                 case '+' :
                 case '-' :
+                case '>' :
+                case '<' :
+                case '|' :
+                case '&' :
                 case '(' :
                 case ')' :
                 case '{' :
