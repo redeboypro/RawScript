@@ -14,10 +14,12 @@ namespace RawScript
             data = new List<object>();
             Instance = this;
         }
+        
+        public static Output Instance { get; private set; }
 
         public object this[int index] => data[index];
 
-        public static Output Instance { get; private set; }
+        public int Length => data.Count;
 
         public void Print(object input)
         {
