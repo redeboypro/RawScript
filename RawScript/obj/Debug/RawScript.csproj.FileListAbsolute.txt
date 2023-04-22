@@ -1,0 +1,6 @@
+E:\Development\RiderIDE\Projects\RawScript\RawScript\bin\Debug\RawScript.dll
+E:\Development\RiderIDE\Projects\RawScript\RawScript\bin\Debug\RawScript.pdb
+E:\Development\RiderIDE\Projects\RawScript\RawScript\obj\Debug\RawScript.csprojAssemblyReference.cache
+E:\Development\RiderIDE\Projects\RawScript\RawScript\obj\Debug\RawScript.csproj.CoreCompileInputs.cache
+E:\Development\RiderIDE\Projects\RawScript\RawScript\obj\Debug\RawScript.dll
+E:\Development\RiderIDE\Projects\RawScript\RawScript\obj\Debug\RawScript.pdb
