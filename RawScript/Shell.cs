@@ -12,7 +12,7 @@ namespace RawScript
     public enum FunctionType
     {
         Print,
-        Use,
+        Execute,
         None
     }
 
@@ -45,7 +45,7 @@ namespace RawScript
         public const string BeginStatement = "{";
         public const string EndStatement = "}";
         
-        private const string Use = "use";
+        private const string Execute = "exec";
         private const string Print = "print";
         
         private const string VariableDeclaration = "var";
@@ -129,8 +129,8 @@ namespace RawScript
                 case Print :
                     functionType = FunctionType.Print;
                     return true;
-                case Use :
-                    functionType = FunctionType.Use;
+                case Execute :
+                    functionType = FunctionType.Execute;
                     return true;
             }
 

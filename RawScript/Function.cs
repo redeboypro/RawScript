@@ -6,7 +6,7 @@ namespace RawScript
 {
     public delegate bool Condition(Dictionary<string, object> variables);
     
-    public class Function
+    public class Function : IInvokable
     {
         protected readonly List<IInvokable> invokables;
 
@@ -16,7 +16,7 @@ namespace RawScript
             Trace(ref variables, source);
         }
 
-        protected void Trace(ref Dictionary<string, object> variables, string source)
+        private void Trace(ref Dictionary<string, object> variables, string source)
         {
             var tokens = Lexer.Separate(source);
             var bracketsCount = 0;
@@ -53,13 +53,13 @@ namespace RawScript
                                 }
                             }));
                             break;
-                        case FunctionType.Use:
+                        case FunctionType.Execute:
                             
                             foreach (var function in functionTokens)
                             {
                                 invokables.Add(new Operation(ref variables, inputVariables =>
                                 {
-                                    engine.GetFunction(function).Invoke();
+                                    engine.Invoke(function);
                                 }));
                             }
                             break;

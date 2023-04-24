@@ -5,13 +5,13 @@ namespace RawScript
 {
     public class Engine
     {
-        private readonly Dictionary<string, object> variables;
-        private readonly Dictionary<string, Function> functions;
+        private readonly Dictionary<string, IInvokable> functions;
+        private Dictionary<string, object> variables;
 
         public Engine()
         {
             variables = new Dictionary<string, object>();
-            functions = new Dictionary<string, Function>();
+            functions = new Dictionary<string, IInvokable>();
             Instance = this;
         }
         
@@ -21,10 +21,26 @@ namespace RawScript
         {
             return variables[name];
         }
-
-        public Function GetFunction(string name)
+        
+        public void SetVariable(string variableName, object variable)
         {
-            return functions[name];
+            if (variables.ContainsKey(variableName))
+            {
+                variables[variableName] = variable;
+                return;
+            }
+            
+            variables.Add(variableName, variable);
+        }
+
+        public void Invoke(string functionName)
+        {
+            functions[functionName].Invoke();
+        }
+
+        public void AddExecutable(string functionName, OperationFunction function)
+        {
+            functions.Add(functionName, new Operation(ref variables, function));
         }
 
         public void LoadFromFile(string fileName)

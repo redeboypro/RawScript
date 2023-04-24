@@ -19,7 +19,7 @@ namespace RawScriptDemo
             engine.LoadFromFile(File1Path);
             engine.LoadFromFile(File2Path);
             
-            engine.GetFunction(File2Path).Invoke();
+            engine.Invoke(File2Path);
             
             for (var i = 0; i < terminal.Length; i++)
             {
