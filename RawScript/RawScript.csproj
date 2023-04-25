@@ -43,6 +43,7 @@
         <Compile Include="Function.cs" />
         <Compile Include="IInvokable.cs" />
         <Compile Include="Lexer.cs" />
+        <Compile Include="Module.cs" />
         <Compile Include="Operation.cs" />
         <Compile Include="Output.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />

@@ -55,5 +55,18 @@ namespace RawScript
             var function = new Function(variables, functionSource);
             functions.Add(functionName, function);
         }
+        
+        public void LoadModule(Module module)
+        {
+            foreach (var variable in module.GetVariableNames())
+            {
+                SetVariable(variable, module.GetVariable(variable));
+            }
+            
+            foreach (var executable in module.GetExecutableNames())
+            {
+                AddExecutable(executable, module.GetExecutable(executable));
+            }
+        }
     }
 }

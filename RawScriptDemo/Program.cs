@@ -19,6 +19,17 @@ namespace RawScriptDemo
             engine.LoadFromFile(File1Path);
             engine.LoadFromFile(File2Path);
             
+            engine.SetVariable("math_input", 0.0f);
+            engine.SetVariable("math_result", 0.0f);
+            engine.AddExecutable("math_sin", inputVariables =>
+            {
+                
+            });
+            engine.AddExecutable("math_cos", inputVariables =>
+            {
+                
+            });
+            
             engine.Invoke(File2Path);
             
             for (var i = 0; i < terminal.Length; i++)
