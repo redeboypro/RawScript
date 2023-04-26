@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace RawScript
@@ -72,7 +73,7 @@ namespace RawScript
             {
                 tokenList.Add(tokenStringBuilder.ToString());
             }
-            
+
             return tokenList.ToArray();
         }
     }

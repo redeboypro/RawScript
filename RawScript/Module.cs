@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace RawScript
 {
@@ -6,20 +7,16 @@ namespace RawScript
     {
         private readonly Dictionary<string, OperationFunction> executables;
         private readonly Dictionary<string, object> variables;
-        private List<string> variableNames;
-        private List<string> executableNames;
 
         public Module()
         {
             executables = new Dictionary<string, OperationFunction>();
             variables = new Dictionary<string, object>();
-            variableNames = new List<string>();
-            executableNames = new List<string>();
         }
 
-        public string[] GetVariableNames()
+        public IEnumerable<string> GetVariableNames()
         {
-            return variableNames.ToArray();
+            return variables.Keys.ToArray();
         }
         
         public object GetVariable(string variableName)
@@ -36,12 +33,11 @@ namespace RawScript
             }
             
             variables.Add(variableName, variable);
-            variableNames.Add(variableName);
         }
         
-        public string[] GetExecutableNames()
+        public IEnumerable<string> GetExecutableNames()
         {
-            return executableNames.ToArray();
+            return executables.Keys.ToArray();
         }
         
         public OperationFunction GetExecutable(string functionName)
@@ -58,7 +54,6 @@ namespace RawScript
             }
             
             executables.Add(functionName, function);
-            executableNames.Add(functionName);
         }
     }
 }

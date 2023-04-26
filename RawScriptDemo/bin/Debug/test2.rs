@@ -1,1 +1,1 @@
-use test1.rs;
+exec test1.rs;

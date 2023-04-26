@@ -1,0 +1,9 @@
+E:\Development\RiderIDE\Projects\RawScript\RawToolkit\bin\Debug\RawToolkit.dll
+E:\Development\RiderIDE\Projects\RawScript\RawToolkit\bin\Debug\RawToolkit.pdb
+E:\Development\RiderIDE\Projects\RawScript\RawToolkit\bin\Debug\RawScript.dll
+E:\Development\RiderIDE\Projects\RawScript\RawToolkit\bin\Debug\RawScript.pdb
+E:\Development\RiderIDE\Projects\RawScript\RawToolkit\obj\Debug\RawToolkit.csprojAssemblyReference.cache
+E:\Development\RiderIDE\Projects\RawScript\RawToolkit\obj\Debug\RawToolkit.csproj.CoreCompileInputs.cache
+E:\Development\RiderIDE\Projects\RawScript\RawToolkit\obj\Debug\RawToolkit.csproj.CopyComplete
+E:\Development\RiderIDE\Projects\RawScript\RawToolkit\obj\Debug\RawToolkit.dll
+E:\Development\RiderIDE\Projects\RawScript\RawToolkit\obj\Debug\RawToolkit.pdb

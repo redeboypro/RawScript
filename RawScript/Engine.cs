@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 
 namespace RawScript
 {
@@ -38,9 +40,17 @@ namespace RawScript
             functions[functionName].Invoke();
         }
 
-        public void AddExecutable(string functionName, OperationFunction function)
+        public void SetExecutable(string functionName, OperationFunction function)
         {
-            functions.Add(functionName, new Operation(ref variables, function));
+            var operation = new Operation(ref variables, function);
+            
+            if (functions.ContainsKey(functionName))
+            {
+                functions[functionName] = operation;
+                return;
+            }
+            
+            functions.Add(functionName, operation);
         }
 
         public void LoadFromFile(string fileName)
@@ -65,7 +75,27 @@ namespace RawScript
             
             foreach (var executable in module.GetExecutableNames())
             {
-                AddExecutable(executable, module.GetExecutable(executable));
+                SetExecutable(executable, module.GetExecutable(executable));
+            }
+        }
+        
+        public void LoadModuleFromFile(string assemblyName)
+        {
+            var assembly = Assembly.LoadFrom(assemblyName);
+            var types = assembly.GetTypes();
+            foreach (var type in types)
+            {
+                var baseType = type.BaseType;
+                
+                if (baseType is null)
+                {
+                    continue;
+                }
+                
+                if (baseType.IsAssignableFrom(typeof(Module)))
+                {
+                    LoadModule((Module) Activator.CreateInstance(type));
+                }
             }
         }
     }

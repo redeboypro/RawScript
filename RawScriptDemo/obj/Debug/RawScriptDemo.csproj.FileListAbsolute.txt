@@ -7,3 +7,5 @@ E:\Development\RiderIDE\Projects\RawScript\RawScriptDemo\obj\Debug\RawScriptDemo
 E:\Development\RiderIDE\Projects\RawScript\RawScriptDemo\bin\Debug\RawScript.dll
 E:\Development\RiderIDE\Projects\RawScript\RawScriptDemo\bin\Debug\RawScript.pdb
 E:\Development\RiderIDE\Projects\RawScript\RawScriptDemo\obj\Debug\RawScriptDemo.csproj.CopyComplete
+E:\Development\RiderIDE\Projects\RawScript\RawScriptDemo\bin\Debug\RawToolkit.dll
+E:\Development\RiderIDE\Projects\RawScript\RawScriptDemo\bin\Debug\RawToolkit.pdb
