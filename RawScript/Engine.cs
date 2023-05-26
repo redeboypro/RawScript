@@ -77,12 +77,12 @@ namespace RawScript
             internalExecutables[functionName].Invoke(Variables, parameters);
         }
 
-        public bool ContainsExecutable(string name)
+        public bool ContainsInternalExecutable(string name)
         {
             return internalExecutables.ContainsKey(name);
         }
         
-        public bool ContainsFunction(string name)
+        public bool ContainsInternalFunction(string name)
         {
             return internalFunctions.ContainsKey(name);
         }
@@ -145,7 +145,6 @@ namespace RawScript
                 
                 if (baseType.IsAssignableFrom(typeof(Module)))
                 {
-                    Console.WriteLine(type.Name);
                     LoadModule((Module) Activator.CreateInstance(type));
                 }
 

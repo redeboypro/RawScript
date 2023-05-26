@@ -78,7 +78,7 @@ namespace RawScript
                 {
                     var executableBuilder = new StringBuilder();
                     executableBuilder.Append(token);
-                    while (!Engine.ContainsFunction(executableBuilder.ToString()))
+                    while (!Engine.ContainsInternalExecutable(executableBuilder.ToString()))
                     {
                         tokenIndex++;
                         executableBuilder.Append(tokens[tokenIndex]);
@@ -357,7 +357,7 @@ namespace RawScript
                 {
                     var functionBuilder = new StringBuilder();
                     functionBuilder.Append(token);
-                    while (!Engine.ContainsFunction(functionBuilder.ToString()))
+                    while (!Engine.ContainsInternalFunction(functionBuilder.ToString()))
                     {
                         functionBuilder.Append(inputTokens[++index]);
                     }
