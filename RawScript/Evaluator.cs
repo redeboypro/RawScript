@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -7,46 +8,46 @@ namespace RawScript
 {
     public class Evaluator
     {
-        private readonly Dictionary<int, int> MultiplicationTokens;
-        private readonly Dictionary<int, int> DivisionTokens;
-        private readonly Dictionary<int, int> DivisionRemainderTokens;
-        private readonly Dictionary<int, int> AdditionTokens;
-        private readonly Dictionary<int, int> SubtractionTokens;
+        private readonly Dictionary<int, int> multiplicationTokens;
+        private readonly Dictionary<int, int> divisionTokens;
+        private readonly Dictionary<int, int> divisionRemainderTokens;
+        private readonly Dictionary<int, int> additionTokens;
+        private readonly Dictionary<int, int> subtractionTokens;
 
-        private readonly Dictionary<int, int> LargerNumberTokens;
-        private readonly Dictionary<int, int> LessNumberTokens;
-        private readonly Dictionary<int, int> EqualityTokens;
+        private readonly Dictionary<int, int> largerNumberTokens;
+        private readonly Dictionary<int, int> lessNumberTokens;
+        private readonly Dictionary<int, int> equalityTokens;
         
-        private readonly Dictionary<int, int> AndTokens;
-        private readonly Dictionary<int, int> OrTokens;
-        private readonly Dictionary<int, int> XorTokens;
+        private readonly Dictionary<int, int> andTokens;
+        private readonly Dictionary<int, int> orTokens;
+        private readonly Dictionary<int, int> xorTokens;
+
+        private readonly CultureInfo cultureInfo;
 
         public Evaluator()
         {
-            MultiplicationTokens = new Dictionary<int, int>();
-            DivisionTokens = new Dictionary<int, int>();
-            DivisionRemainderTokens = new Dictionary<int, int>();
-            AdditionTokens = new Dictionary<int, int>();
-            SubtractionTokens = new Dictionary<int, int>(); 
+            multiplicationTokens = new Dictionary<int, int>();
+            divisionTokens = new Dictionary<int, int>();
+            divisionRemainderTokens = new Dictionary<int, int>();
+            additionTokens = new Dictionary<int, int>();
+            subtractionTokens = new Dictionary<int, int>(); 
             
-            LargerNumberTokens = new Dictionary<int, int>(); 
-            LessNumberTokens = new Dictionary<int, int>(); 
-            EqualityTokens = new Dictionary<int, int>();
+            largerNumberTokens = new Dictionary<int, int>(); 
+            lessNumberTokens = new Dictionary<int, int>(); 
+            equalityTokens = new Dictionary<int, int>();
             
-            AndTokens = new Dictionary<int, int>(); 
-            OrTokens = new Dictionary<int, int>(); 
-            XorTokens = new Dictionary<int, int>();
+            andTokens = new Dictionary<int, int>(); 
+            orTokens = new Dictionary<int, int>(); 
+            xorTokens = new Dictionary<int, int>();
 
-            Instance = this;
+            cultureInfo = (CultureInfo) CultureInfo.CurrentCulture.Clone();
+            cultureInfo.NumberFormat.CurrencyDecimalSeparator = ".";
         }
 
-        public static Evaluator Instance { get; private set; }
 
         public object Evaluate(string expression)
         {
-            var bracketsCount = expression.Count(x => x == Shell.BracketsOpening);
-            
-            for (var i = 0; i < bracketsCount; i++)
+            while (expression.Contains(Shell.BracketsOpening))
             {
                 expression = Trace(expression).ToString();
             }
@@ -59,22 +60,23 @@ namespace RawScript
             var tokens = Lexer.Separate(expression);
             expression = tokens.JoinTokens();
             
-            var bracketCount = 0;
-            var bracketBuilder = new StringBuilder();
             var expressionPosition = 0;
-            
+            var bracketsCount = 0;
+            var bracketBuilder = new StringBuilder();
+
             for (var i = 0; i < tokens.Length; i++)
             {
                 var token = tokens[i];
 
                 if (tokens[i] == Shell.BracketsOpening.ToString())
                 {
-                    i++; bracketCount++;
+                    i++; 
+                    bracketsCount++;
 
                     var startPosition = expressionPosition;
                     var length = 3;
 
-                    while (bracketCount > 0)
+                    while (bracketsCount > 0)
                     {
                         token = tokens[i];
 
@@ -83,15 +85,15 @@ namespace RawScript
                             switch (sym)
                             {
                                 case Shell.BracketsOpening:
-                                    bracketCount++;
+                                    bracketsCount++;
                                     break;
                                 case Shell.BracketsClosing:
-                                    bracketCount--;
+                                    bracketsCount--;
                                     break;
                             }
                         }
 
-                        if (bracketCount > 0)
+                        if (bracketsCount > 0)
                         {
                             bracketBuilder.Append(token + Shell.TokenSeparator);
                             length += token.Length + 1;
@@ -101,7 +103,7 @@ namespace RawScript
                     }
 
                     return expression.Remove(startPosition, length)
-                        .Insert(startPosition, Trace(bracketBuilder.ToString()).ToString());
+                        .Insert(startPosition, Evaluate(bracketBuilder.ToString()).ToString());
                 }
                 
                 expressionPosition += token.Length + 1;
@@ -117,7 +119,7 @@ namespace RawScript
                 return resultAsBoolean;
             }
 
-            if (float.TryParse(expression, out var resultAsSingle))
+            if (float.TryParse(expression, NumberStyles.Any, cultureInfo, out var resultAsSingle))
             {
                 return resultAsSingle;
             }
@@ -129,17 +131,17 @@ namespace RawScript
         {
             var whitespaces = Lexer.Separate(expression);
 
-            MultiplicationTokens.Clear();
-            DivisionTokens.Clear();
-            AdditionTokens.Clear();
-            SubtractionTokens.Clear();
-            DivisionRemainderTokens.Clear();
-            LargerNumberTokens.Clear();
-            LessNumberTokens.Clear();
-            EqualityTokens.Clear();
-            AndTokens.Clear();
-            OrTokens.Clear();
-            XorTokens.Clear();
+            multiplicationTokens.Clear();
+            divisionTokens.Clear();
+            additionTokens.Clear();
+            subtractionTokens.Clear();
+            divisionRemainderTokens.Clear();
+            largerNumberTokens.Clear();
+            lessNumberTokens.Clear();
+            equalityTokens.Clear();
+            andTokens.Clear();
+            orTokens.Clear();
+            xorTokens.Clear();
 
             var currentTokenId = 0;
 
@@ -155,106 +157,106 @@ namespace RawScript
                 switch (sym)
                 {
                     case '*':
-                        MultiplicationTokens.Add(currentTokenId, i);
+                        multiplicationTokens.Add(currentTokenId, i);
                         break;
                     case '/':
-                        DivisionTokens.Add(currentTokenId, i);
+                        divisionTokens.Add(currentTokenId, i);
                         break;
                     case '%':
-                        DivisionRemainderTokens.Add(currentTokenId, i);
+                        divisionRemainderTokens.Add(currentTokenId, i);
                         break;
                     case '+':
-                        AdditionTokens.Add(currentTokenId, i);
+                        additionTokens.Add(currentTokenId, i);
                         break;
                     case '-':
-                        SubtractionTokens.Add(currentTokenId, i);
+                        subtractionTokens.Add(currentTokenId, i);
                         break;
                     case '>':
-                        LargerNumberTokens.Add(currentTokenId, i);
+                        largerNumberTokens.Add(currentTokenId, i);
                         break;
                     case '<':
-                        LessNumberTokens.Add(currentTokenId, i);
+                        lessNumberTokens.Add(currentTokenId, i);
                         break;
                     case '=':
-                        EqualityTokens.Add(currentTokenId, i);
+                        equalityTokens.Add(currentTokenId, i);
                         break;
                     case '&':
-                        AndTokens.Add(currentTokenId, i);
+                        andTokens.Add(currentTokenId, i);
                         break;
                     case '|':
-                        OrTokens.Add(currentTokenId, i);
+                        orTokens.Add(currentTokenId, i);
                         break;
                     case '^':
-                        XorTokens.Add(currentTokenId, i);
+                        xorTokens.Add(currentTokenId, i);
                         break;
                 }
             }
 
-            var divisionRemainderCheck = EvaluateLocally(Operation.DivisionRemainder, DivisionRemainderTokens, whitespaces, expression);
+            var divisionRemainderCheck = EvaluateLocally(Operation.DivisionRemainder, divisionRemainderTokens, whitespaces, expression);
             if (divisionRemainderCheck != expression)
             {
                 return divisionRemainderCheck;
             }
 
-            var multiplicationCheck = EvaluateLocally(Operation.Multiplication, MultiplicationTokens, whitespaces, expression);
+            var multiplicationCheck = EvaluateLocally(Operation.Multiplication, multiplicationTokens, whitespaces, expression);
             if (multiplicationCheck != expression)
             {
                 return multiplicationCheck;
             }
 
-            var divisionCheck = EvaluateLocally(Operation.Division, DivisionTokens, whitespaces, expression);
+            var divisionCheck = EvaluateLocally(Operation.Division, divisionTokens, whitespaces, expression);
             if (divisionCheck != expression)
             {
                 return divisionCheck;
             }
 
-            var additionCheck = EvaluateLocally(Operation.Addition, AdditionTokens, whitespaces, expression);
+            var additionCheck = EvaluateLocally(Operation.Addition, additionTokens, whitespaces, expression);
             if (additionCheck != expression)
             {
                 return additionCheck;
             }
 
-            var subtractionCheck = EvaluateLocally(Operation.Subtraction, SubtractionTokens, whitespaces, expression);
+            var subtractionCheck = EvaluateLocally(Operation.Subtraction, subtractionTokens, whitespaces, expression);
             if (subtractionCheck != expression)
             {
                 return subtractionCheck;
             }
             
-            var largerNumberCheck = EvaluateLocally(Operation.LargerThan, LargerNumberTokens, whitespaces, expression);
+            var largerNumberCheck = EvaluateLocally(Operation.LargerThan, largerNumberTokens, whitespaces, expression);
             if (largerNumberCheck != expression)
             {
                 return largerNumberCheck;
             }
             
-            var lessNumberCheck = EvaluateLocally(Operation.LessThan, LessNumberTokens, whitespaces, expression);
+            var lessNumberCheck = EvaluateLocally(Operation.LessThan, lessNumberTokens, whitespaces, expression);
             if (lessNumberCheck != expression)
             {
                 return lessNumberCheck;
             }
             
-            var equalityCheck = EvaluateLocally(Operation.Equals, EqualityTokens, whitespaces, expression);
+            var equalityCheck = EvaluateLocally(Operation.Equals, equalityTokens, whitespaces, expression);
             if (equalityCheck != expression)
             {
                 return equalityCheck;
             }
             
-            var andCheck = EvaluateLocally(Operation.And, AndTokens, whitespaces, expression);
+            var andCheck = EvaluateLocally(Operation.And, andTokens, whitespaces, expression);
             if (andCheck != expression)
             {
                 return andCheck;
             }
             
-            var orCheck = EvaluateLocally(Operation.Or, OrTokens, whitespaces, expression);
+            var orCheck = EvaluateLocally(Operation.Or, orTokens, whitespaces, expression);
             if (orCheck != expression)
             {
                 return orCheck;
             }
             
-            var xorCheck = EvaluateLocally(Operation.Xor, XorTokens, whitespaces, expression);
+            var xorCheck = EvaluateLocally(Operation.Xor, xorTokens, whitespaces, expression);
             return xorCheck != expression ? xorCheck : expression;
         }
 
-        private static string EvaluateLocally(Operation operation, IReadOnlyDictionary<int, int> tokens, IReadOnlyList<string> whitespaces,
+        private string EvaluateLocally(Operation operation, IReadOnlyDictionary<int, int> tokens, IReadOnlyList<string> whitespaces,
             string expression)
         {
             foreach (var token in tokens)
@@ -267,7 +269,7 @@ namespace RawScript
 
                 var clearedExpression = expression.Remove(tokenPosition, length);
 
-                if (float.TryParse(a, out var aTestA) && float.TryParse(b, out var bTestA))
+                if (float.TryParse(a, NumberStyles.Any, cultureInfo, out var aTestA) && float.TryParse(b, NumberStyles.Any, cultureInfo, out var bTestA))
                 {
                     return GetLocalResult(operation, clearedExpression, tokenPosition, aTestA, bTestA);
                 }
@@ -324,10 +326,8 @@ namespace RawScript
                     return (bool) a ^ (bool) b;
 
                 default:
-                    return 0;
+                    throw new Exception("Unknown operation");
             }
-            
-            throw new Exception("Unknown operation");
         }
 
         private enum Operation

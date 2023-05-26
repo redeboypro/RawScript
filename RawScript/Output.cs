@@ -12,10 +12,7 @@ namespace RawScript
         public Output()
         {
             data = new List<object>();
-            Instance = this;
         }
-        
-        public static Output Instance { get; private set; }
 
         public object this[int index] => data[index];
 

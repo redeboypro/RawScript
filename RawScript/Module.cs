@@ -5,12 +5,12 @@ namespace RawScript
 {
     public class Module
     {
-        private readonly Dictionary<string, OperationFunction> executables;
+        private readonly Dictionary<string, ExecutableTypeDef> executables;
         private readonly Dictionary<string, object> variables;
 
-        public Module()
+        protected Module()
         {
-            executables = new Dictionary<string, OperationFunction>();
+            executables = new Dictionary<string, ExecutableTypeDef>();
             variables = new Dictionary<string, object>();
         }
 
@@ -24,7 +24,7 @@ namespace RawScript
             return variables[variableName];
         }
 
-        public void SetVariable(string variableName, object variable)
+        protected void SetVariable(string variableName, object variable)
         {
             if (variables.ContainsKey(variableName))
             {
@@ -40,12 +40,12 @@ namespace RawScript
             return executables.Keys.ToArray();
         }
         
-        public OperationFunction GetExecutable(string functionName)
+        public ExecutableTypeDef GetExecutable(string functionName)
         {
             return executables[functionName];
         }
 
-        public void SetExecutable(string functionName, OperationFunction function)
+        protected void SetExecutable(string functionName, ExecutableTypeDef function)
         {
             if (executables.ContainsKey(functionName))
             {

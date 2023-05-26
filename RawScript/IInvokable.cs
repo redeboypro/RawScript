@@ -1,6 +1,8 @@
-﻿namespace RawScript
+﻿using System;
+
+namespace RawScript
 {
-    public interface IInvokable
+    public interface IInvokable : IDisposable
     {
         void Invoke();
     }

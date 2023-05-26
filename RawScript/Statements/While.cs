@@ -1,27 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace RawScript.Statements
 {
-    public class While : Function, IInvokable
+    public class While : Invokable
     {
-        private readonly Condition condition;
-        private readonly Dictionary<string, object> variables;
+        private readonly FunctionTypeDef condition;
 
-        public While(ref Dictionary<string, object> variables, Condition condition, string source) :
-            base(variables, source)
+        public While(Invokable parent, Engine engine, FunctionTypeDef condition, string source) :
+            base(parent, engine, source)
         {
-            this.variables = variables;
             this.condition = condition;
         }
         
         public override void Invoke()
         {
-            while (condition.Invoke(variables))
+            while ((bool) condition.Invoke(Engine.Variables))
             {
-                foreach (var invokable in invokables)
-                {
-                    invokable.Invoke();
-                }
+                base.Invoke();
             }
         }
     }

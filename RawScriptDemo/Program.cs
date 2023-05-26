@@ -12,21 +12,8 @@ namespace RawScriptDemo
         
         public static void Main(string[] args)
         {
-            var evaluator = new Evaluator();
-            var terminal = new Output();
-            var engine = new Engine();
-            
-            engine.LoadFromFile(File1Path);
-            engine.LoadFromFile(File2Path);
-            
-            engine.LoadModuleFromFile("RawToolkit.dll");
-            
-            engine.Invoke(File2Path);
-            
-            for (var i = 0; i < terminal.Length; i++)
-            {
-                Console.WriteLine(terminal[i]);
-            }
+            //var evaluator = new Evaluator();
+            //Console.WriteLine(evaluator.Evaluate("False = (( ( 0 = 0 ) | ( ( 0 = 0 ) | ( 0 = 1 & 0 = 1 ) ) ))"));
         }
     }
 }

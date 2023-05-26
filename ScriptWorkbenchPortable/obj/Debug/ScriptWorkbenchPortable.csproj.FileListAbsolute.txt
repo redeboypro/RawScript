@@ -1,0 +1,6 @@
+E:\Development\RiderIDE\Projects\RawScript\ScriptWorkbenchPortable\bin\Debug\ScriptWorkbenchPortable.exe
+E:\Development\RiderIDE\Projects\RawScript\ScriptWorkbenchPortable\bin\Debug\ScriptWorkbenchPortable.pdb
+E:\Development\RiderIDE\Projects\RawScript\ScriptWorkbenchPortable\obj\Debug\ScriptWorkbenchPortable.csprojAssemblyReference.cache
+E:\Development\RiderIDE\Projects\RawScript\ScriptWorkbenchPortable\obj\Debug\ScriptWorkbenchPortable.csproj.CoreCompileInputs.cache
+E:\Development\RiderIDE\Projects\RawScript\ScriptWorkbenchPortable\obj\Debug\ScriptWorkbenchPortable.exe
+E:\Development\RiderIDE\Projects\RawScript\ScriptWorkbenchPortable\obj\Debug\ScriptWorkbenchPortable.pdb

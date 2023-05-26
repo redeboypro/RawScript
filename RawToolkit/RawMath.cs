@@ -4,6 +4,7 @@ using RawScript;
 
 namespace RawToolkit
 {
+    [Instance]
     public class RawMath : Module
     {
         private const string PI = "math_pi";
@@ -59,40 +60,40 @@ namespace RawToolkit
             
             SetExecutable(Sin, inputVariables =>
             {
-                inputVariables[Result] = (float) Math.Round(Math.Sin((float) Parameters[0]), 6);
+                inputVariables[Result] = (float) Math.Sin((float) Parameters[0]);
             });
             SetExecutable(Cos, inputVariables =>
             {
-                inputVariables[Result] = (float) Math.Round(Math.Cos((float) Parameters[0]), 6);
+                inputVariables[Result] = (float) Math.Cos((float) Parameters[0]);
             });
             SetExecutable(Tan, inputVariables =>
             {
-                inputVariables[Result] = (float) Math.Round(Math.Tan((float) Parameters[0]), 6);
+                inputVariables[Result] = (float) Math.Tan((float) Parameters[0]);
             });
             SetExecutable(Cot, inputVariables =>
             {
-                inputVariables[Result] = 1.0f / Math.Round(Math.Tan((float) Parameters[0]), 6);
+                inputVariables[Result] = 1.0f / Math.Tan((float) Parameters[0]);
             });
             
             SetExecutable(ASin, inputVariables =>
             {
-                inputVariables[Result] = (float) Math.Round(Math.Asin((float) Parameters[0]), 6);
+                inputVariables[Result] = (float) Math.Asin((float) Parameters[0]);
             });
             SetExecutable(ACos, inputVariables =>
             {
-                inputVariables[Result] = (float) Math.Round(Math.Acos((float) Parameters[0]), 6);
+                inputVariables[Result] = (float) Math.Acos((float) Parameters[0]);
             });
             SetExecutable(ATan, inputVariables =>
             {
-                inputVariables[Result] = (float) Math.Round(Math.Atan((float) Parameters[0]), 6);
+                inputVariables[Result] = (float) Math.Atan((float) Parameters[0]);
             });
             SetExecutable(ATan2, inputVariables =>
             {
-                inputVariables[Result] = (float) Math.Round(Math.Atan2((float) Parameters[0], (float) Parameters[1]), 6);
+                inputVariables[Result] = (float) Math.Atan2((float) Parameters[0], (float) Parameters[1]);
             });
             SetExecutable(ACot, inputVariables =>
             {
-                inputVariables[Result] = (float) Math.Round(Math.PI / 2.0f - Math.Atan((float) Parameters[0]), 6);
+                inputVariables[Result] = (float) Math.PI / 2.0f - Math.Atan((float) Parameters[0]);
             });
             
             SetExecutable(Abs, inputVariables =>
@@ -106,15 +107,15 @@ namespace RawToolkit
             
             SetExecutable(Pow, inputVariables =>
             {
-                inputVariables[Result] = (float) Math.Round(Math.Pow((float) Parameters[0], (float) Parameters[1]), 6);
+                inputVariables[Result] = (float) Math.Pow((float) Parameters[0], (float) Parameters[1]);
             });
             SetExecutable(Log, inputVariables =>
             {
-                inputVariables[Result] = (float) Math.Round(Math.Log((float) Parameters[0], (float) Parameters[1]), 6);
+                inputVariables[Result] = (float) Math.Log((float) Parameters[0], (float) Parameters[1]);
             });
             SetExecutable(Log10, inputVariables =>
             {
-                inputVariables[Result] = (float) Math.Round(Math.Log10((float) Parameters[0]), 6);
+                inputVariables[Result] = (float) Math.Log10((float) Parameters[0]);
             });
             
             SetExecutable(Ceil, inputVariables =>

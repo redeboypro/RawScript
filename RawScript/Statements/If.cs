@@ -1,30 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace RawScript.Statements
 {
-    public class If : Function, IInvokable
+    public class If : Invokable
     {
-        private readonly Condition condition;
-        private readonly Dictionary<string, object> variables;
+        private readonly FunctionTypeDef condition;
 
-        public If(ref Dictionary<string, object> variables, Condition condition, string source) :
-            base(variables, source)
+        public If(Invokable parent, Engine engine, FunctionTypeDef condition, string source) :
+            base(parent, engine, source)
         {
-            this.variables = variables;
             this.condition = condition;
         }
         
         public override void Invoke()
         {
-            if (!condition.Invoke(variables))
+            if (!(bool) condition.Invoke(Engine.Variables))
             {
                 return;
             }
             
-            foreach (var invokable in invokables)
-            {
-                invokable.Invoke();
-            }
+            base.Invoke();
         }
     }
 }

@@ -1,0 +1,9 @@
+E:\Development\RiderIDE\Projects\RawScript\RawExecutor\bin\Debug\RawExecutor.exe
+E:\Development\RiderIDE\Projects\RawScript\RawExecutor\bin\Debug\RawExecutor.pdb
+E:\Development\RiderIDE\Projects\RawScript\RawExecutor\bin\Debug\RawScript.dll
+E:\Development\RiderIDE\Projects\RawScript\RawExecutor\bin\Debug\RawScript.pdb
+E:\Development\RiderIDE\Projects\RawScript\RawExecutor\obj\Debug\RawExecutor.csprojAssemblyReference.cache
+E:\Development\RiderIDE\Projects\RawScript\RawExecutor\obj\Debug\RawExecutor.csproj.CoreCompileInputs.cache
+E:\Development\RiderIDE\Projects\RawScript\RawExecutor\obj\Debug\RawExecutor.csproj.CopyComplete
+E:\Development\RiderIDE\Projects\RawScript\RawExecutor\obj\Debug\RawExecutor.exe
+E:\Development\RiderIDE\Projects\RawScript\RawExecutor\obj\Debug\RawExecutor.pdb

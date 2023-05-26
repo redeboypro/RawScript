@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "dgSpecHash": "v6AeZA043o8YWNMbKCVAHI4tDZLOKTS5uE7rL/bZqxgmmGoELhrvkjFhquk8sU3hTLn3zQ8CHQ+mXoBmtl0ylw==",
+  "success": true,
+  "projectFilePath": "E:\\Development\\RiderIDE\\Projects\\RawScript\\RawEditor\\RawEditor.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\RedeBoy\\.nuget\\packages\\xamarin.android.support.animated.vector.drawable\\25.4.0.2\\xamarin.android.support.animated.vector.drawable.25.4.0.2.nupkg.sha512",
+    "C:\\Users\\RedeBoy\\.nuget\\packages\\xamarin.android.support.annotations\\25.4.0.2\\xamarin.android.support.annotations.25.4.0.2.nupkg.sha512",
+    "C:\\Users\\RedeBoy\\.nuget\\packages\\xamarin.android.support.compat\\25.4.0.2\\xamarin.android.support.compat.25.4.0.2.nupkg.sha512",
+    "C:\\Users\\RedeBoy\\.nuget\\packages\\xamarin.android.support.core.ui\\25.4.0.2\\xamarin.android.support.core.ui.25.4.0.2.nupkg.sha512",
+    "C:\\Users\\RedeBoy\\.nuget\\packages\\xamarin.android.support.core.utils\\25.4.0.2\\xamarin.android.support.core.utils.25.4.0.2.nupkg.sha512",
+    "C:\\Users\\RedeBoy\\.nuget\\packages\\xamarin.android.support.design\\25.4.0.2\\xamarin.android.support.design.25.4.0.2.nupkg.sha512",
+    "C:\\Users\\RedeBoy\\.nuget\\packages\\xamarin.android.support.fragment\\25.4.0.2\\xamarin.android.support.fragment.25.4.0.2.nupkg.sha512",
+    "C:\\Users\\RedeBoy\\.nuget\\packages\\xamarin.android.support.media.compat\\25.4.0.2\\xamarin.android.support.media.compat.25.4.0.2.nupkg.sha512",
+    "C:\\Users\\RedeBoy\\.nuget\\packages\\xamarin.android.support.transition\\25.4.0.2\\xamarin.android.support.transition.25.4.0.2.nupkg.sha512",
+    "C:\\Users\\RedeBoy\\.nuget\\packages\\xamarin.android.support.v7.appcompat\\25.4.0.2\\xamarin.android.support.v7.appcompat.25.4.0.2.nupkg.sha512",
+    "C:\\Users\\RedeBoy\\.nuget\\packages\\xamarin.android.support.v7.recyclerview\\25.4.0.2\\xamarin.android.support.v7.recyclerview.25.4.0.2.nupkg.sha512",
+    "C:\\Users\\RedeBoy\\.nuget\\packages\\xamarin.android.support.vector.drawable\\25.4.0.2\\xamarin.android.support.vector.drawable.25.4.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}
