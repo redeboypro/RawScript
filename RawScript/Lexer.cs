@@ -27,6 +27,7 @@ namespace RawScript
                 case ';' :
                 case ',' :
                 case '.' :
+                case '\'' :
                     return true;
             }
 

@@ -12,7 +12,7 @@ namespace RawExecutor
         {
             var engine = new Engine();
             var terminal = engine.Terminal;
-            
+
             var folderBrowser = new FolderBrowserDialog();
             var result = folderBrowser.ShowDialog();
             if (result is DialogResult.OK)

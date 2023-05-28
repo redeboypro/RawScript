@@ -43,8 +43,7 @@ namespace RawScript
             cultureInfo = (CultureInfo) CultureInfo.CurrentCulture.Clone();
             cultureInfo.NumberFormat.CurrencyDecimalSeparator = ".";
         }
-
-
+        
         public object Evaluate(string expression)
         {
             while (expression.Contains(Shell.BracketsOpening))

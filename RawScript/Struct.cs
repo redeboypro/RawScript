@@ -33,12 +33,30 @@ namespace RawScript
 
         protected void Add(string name, ParamExecutableTypeDef invokable)
         {
+            if (ContainsExecutable(name))
+            {
+                return;
+            }
             executables.Add(new ExecutableData(name, invokable));
         }
         
         protected void Add(string name, ParamFunctionTypeDef invokable)
         {
+            if (ContainsFunction(name))
+            {
+                return;
+            }
             functions.Add(new FunctionData(name, invokable));
+        }
+
+        private bool ContainsExecutable(string name)
+        {
+            return executables.Any(ex => ex.Name == name);
+        }
+        
+        private bool ContainsFunction(string name)
+        {
+            return functions.Any(fun => fun.Name == name);
         }
 
         public readonly struct ExecutableData

@@ -74,10 +74,12 @@ namespace RawScript
                     }
                 }
 
-                if (Engine.ContainsInstance(token))
+                var previousIndex = tokenIndex - 1;
+                if (Engine.ContainsInstance(token) && (previousIndex < 0 || tokens[previousIndex].IsClosing()))
                 {
                     var executableBuilder = new StringBuilder();
                     executableBuilder.Append(token);
+                    
                     while (!Engine.ContainsInternalExecutable(executableBuilder.ToString()))
                     {
                         tokenIndex++;
@@ -85,7 +87,14 @@ namespace RawScript
                     }
 
                     tokenIndex++;
-                    Engine.InvokeInternalExecutable(executableBuilder.ToString(), GetParameters(ref tokenIndex, tokens, variables));;
+
+                    var cachedIndex = tokenIndex;
+                    Invokables.Add(new Executable(variables, inputVariables =>
+                    {
+                        var internalIndex = cachedIndex;
+                        Engine.InvokeInternalExecutable(executableBuilder.ToString(),
+                            GetParameters(ref internalIndex, tokens, inputVariables));
+                    }));
                 }
 
                 if (token == Shell.BeginStatement)
@@ -137,12 +146,13 @@ namespace RawScript
                     token = tokens[tokenIndex];
 
                     var combinedInternalData = internalData.JoinTokens();
-                    
+
                     object ConditionCheck(Dictionary<string, object> inputVariables)
                     {
                         if (evaluator != null)
                         {
-                            return (bool) evaluator.Evaluate(InsertValues(inputVariables, parameters));
+                            var inserted = InsertValues(inputVariables, parameters);
+                            return (bool) evaluator.Evaluate(inserted);
                         }
 
                         return false;
@@ -258,9 +268,10 @@ namespace RawScript
                     return inputVariables =>
                     {
                         expression = InsertValues(inputVariables, expression);
-                        var evaluated = (float) inputVariables[local] * (float) evaluator.Evaluate(expression);
+                        var containsLocal = ContainsLocal(local, out var holder);
+                        var evaluated = (containsLocal ? (float) holder.Locals[local] : (float) inputVariables[local]) * (float) evaluator.Evaluate(expression);
                         
-                        if (ContainsLocal(local, out var holder))
+                        if (containsLocal)
                         {
                             holder.Locals[local] = evaluated;
                             return;
@@ -272,9 +283,10 @@ namespace RawScript
                     return inputVariables =>
                     {
                         expression = InsertValues(inputVariables, expression);
-                        var evaluated = (float) inputVariables[local] / (float) evaluator.Evaluate(expression);
+                        var containsLocal = ContainsLocal(local, out var holder);
+                        var evaluated = (containsLocal ? (float) holder.Locals[local] : (float) inputVariables[local]) / (float) evaluator.Evaluate(expression);
                         
-                        if (ContainsLocal(local, out var holder))
+                        if (containsLocal)
                         {
                             holder.Locals[local] = evaluated;
                             return;
@@ -286,9 +298,10 @@ namespace RawScript
                     return inputVariables =>
                     {
                         expression = InsertValues(inputVariables, expression);
-                        var evaluated = (float) inputVariables[local] + (float) evaluator.Evaluate(expression);
+                        var containsLocal = ContainsLocal(local, out var holder);
+                        var evaluated = (containsLocal ? (float) holder.Locals[local] : (float) inputVariables[local]) + (float) evaluator.Evaluate(expression);
                         
-                        if (ContainsLocal(local, out var holder))
+                        if (containsLocal)
                         {
                             holder.Locals[local] = evaluated;
                             return;
@@ -300,9 +313,10 @@ namespace RawScript
                     return inputVariables =>
                     {
                         expression = InsertValues(inputVariables, expression);
-                        var evaluated = (float) inputVariables[local] - (float) evaluator.Evaluate(expression);
+                        var containsLocal = ContainsLocal(local, out var holder);
+                        var evaluated = (containsLocal ? (float) holder.Locals[local] : (float) inputVariables[local]) - (float) evaluator.Evaluate(expression);
                         
-                        if (ContainsLocal(local, out var holder))
+                        if (containsLocal)
                         {
                             holder.Locals[local] = evaluated;
                             return;
@@ -342,13 +356,19 @@ namespace RawScript
                 if (ContainsLocal(token, out var holder))
                 {
                     resultTokens.Add(holder.Locals[token].ToString());
-                    index++;
                     continue;
                 }
 
                 if (inputVariables.ContainsKey(token))
                 {
                     resultTokens.Add(inputVariables[token].ToString());
+                    continue;
+                }
+                
+                if (token == Shell.CharQuote)
+                {
+                    token = inputTokens[++index];
+                    resultTokens.Add(((int) char.Parse(token)).ToString());
                     index++;
                     continue;
                 }

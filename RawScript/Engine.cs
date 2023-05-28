@@ -115,20 +115,7 @@ namespace RawScript
             var function = new Invokable(Invokable.None, this, functionSource);
             invokables.Add(functionName, function);
         }
-        
-        public void LoadModule(Module module)
-        {
-            foreach (var variable in module.GetVariableNames())
-            {
-                SetVariable(variable, module.GetVariable(variable));
-            }
-            
-            foreach (var executable in module.GetExecutableNames())
-            {
-                SetExecutable(executable, module.GetExecutable(executable));
-            }
-        }
-        
+
         public void LoadAssemlyFromFile(string assemblyName)
         {
             var assembly = Assembly.LoadFrom(assemblyName);
@@ -141,11 +128,6 @@ namespace RawScript
                 if (baseType is null || instanceAttribute is null)
                 {
                     continue;
-                }
-                
-                if (baseType.IsAssignableFrom(typeof(Module)))
-                {
-                    LoadModule((Module) Activator.CreateInstance(type));
                 }
 
                 if (baseType.IsAssignableFrom(typeof(Struct)))

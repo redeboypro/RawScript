@@ -41,11 +41,11 @@
         <Compile Include="Engine.cs" />
         <Compile Include="Evaluator.cs" />
         <Compile Include="Executable.cs" />
+        <Compile Include="ExtractedStruct.cs" />
         <Compile Include="IInvokable.cs" />
         <Compile Include="Instance.cs" />
         <Compile Include="Invokable.cs" />
         <Compile Include="Lexer.cs" />
-        <Compile Include="Module.cs" />
         <Compile Include="Output.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="Shell.cs" />

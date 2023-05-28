@@ -53,6 +53,8 @@ namespace RawScript
         public const string DeclarationSeparator = ";";
         public const string ParameterSeparator = ",";
         public const string RootSeparator = ".";
+        
+        public const string CharQuote = "'";
 
         public const char BracketsOpening = '(';
         public const char BracketsClosing = ')';
@@ -160,6 +162,11 @@ namespace RawScript
             }
 
             return false;
+        }
+        
+        public static bool IsClosing(this string token)
+        {
+            return token is EndStatement || token is DeclarationSeparator;
         }
         
         public static string JoinTokens(this IEnumerable<string> tokens)
