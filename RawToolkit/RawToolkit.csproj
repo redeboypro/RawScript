@@ -41,6 +41,8 @@
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="RawArray.cs" />
         <Compile Include="RawConverter.cs" />
+        <Compile Include="RawEvaluator.cs" />
+        <Compile Include="RawFastOutput.cs" />
         <Compile Include="RawFile.cs" />
         <Compile Include="RawGrid.cs" />
         <Compile Include="RawInput.cs" />

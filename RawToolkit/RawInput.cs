@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using RawScript;
 
 namespace RawToolkit
@@ -13,7 +14,7 @@ namespace RawToolkit
             Add("keyIsAvailable", (variables, parameters) => Console.KeyAvailable);
             Add("readKey", (variables, parameters) => (int) Console.ReadKey().KeyChar);
             Add("readNumber", (variables, parameters) => (float) engine.Evaluator.Evaluate(Console.ReadLine()));
-            Add("readTokens", (variables, parameters) =>
+            Add("readLine", (variables, parameters) =>
             {
                 var line = Console.ReadLine();
                 
@@ -21,11 +22,8 @@ namespace RawToolkit
                 {
                     return;
                 }
-                
-                foreach (var token in line)
-                {
-                    tokens.Add(token);
-                }
+
+                tokens.AddRange(line.Select(token => (int) token));
             });
             
             Add("clear", (variables, parameters) =>
