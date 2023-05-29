@@ -15,13 +15,7 @@ namespace RawToolkit
         {
             Add("read", (variables, parameters) =>
             {
-                var pathBuilder = new StringBuilder();
-                foreach (var parameter in parameters)
-                {
-                    pathBuilder.Append((char)Convert.ToInt32(parameter));
-                }
-
-                var lines = File.ReadAllLines(pathBuilder.ToString());
+                var lines = File.ReadAllLines(parameters.ParametersToString());
                 linesCount = lines.Length;
                 data = new char[linesCount][];
                 for (var index = 0; index < lines.Length; index++)

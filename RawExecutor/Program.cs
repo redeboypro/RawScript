@@ -38,7 +38,7 @@ namespace RawExecutor
             engine.Invoke("main.rs");
             for (var lineIndex = 0; lineIndex < terminal.Length; lineIndex++)
             {
-                Console.WriteLine(terminal[lineIndex]);
+                Console.WriteLine(terminal[lineIndex].ToInvariantString());
             }
 
             while (!Console.KeyAvailable)

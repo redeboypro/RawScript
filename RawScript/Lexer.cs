@@ -6,7 +6,7 @@ namespace RawScript
 {
     public static class Lexer
     {
-        public static bool IsOperator(this char source)
+        public static bool IsOperator(this char source, string allTokens, int index)
         {
             switch (source)
             {
@@ -26,9 +26,16 @@ namespace RawScript
                 case '}' :
                 case ';' :
                 case ',' :
-                case '.' :
                 case '\'' :
                     return true;
+                case '.' :
+                    if (index >= allTokens.Length)
+                    {
+                        return true;
+                    }
+                    
+                    var next = allTokens[index + 1];
+                    return !char.IsNumber(next);
             }
 
             return false;
@@ -39,10 +46,10 @@ namespace RawScript
             var tokenStringBuilder = new StringBuilder();
             var tokenList = new List<string>();
 
-            foreach (var sym in source)
+            for (var tokenIndex = 0; tokenIndex < source.Length; tokenIndex++)
             {
+                var sym = source[tokenIndex];
                 var token = tokenStringBuilder.ToString();
-
                 if (sym == Shell.TokenSeparator)
                 {
                     if (token.Length > 0)
@@ -53,25 +60,25 @@ namespace RawScript
                     tokenStringBuilder.Clear();
                     continue;
                 }
-                
-                if (sym.IsOperator())
+
+                if (sym.IsOperator(source, tokenIndex))
                 {
                     if (token.Length > 0)
                     {
                         tokenList.Add(token);
                     }
-                    
+
                     tokenStringBuilder.Clear();
                     tokenList.Add(sym.ToString());
                     continue;
                 }
-                
+
                 if (!char.IsControl(sym))
                 {
                     tokenStringBuilder.Append(sym.ToString());
                 }
             }
-            
+
             if (tokenStringBuilder.Length > 0)
             {
                 tokenList.Add(tokenStringBuilder.ToString());

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using RawScript;
 
 namespace RawToolkit
@@ -9,21 +10,21 @@ namespace RawToolkit
     {
         public RawText(Engine engine) : base(engine)
         {
-            var chars = new List<char>();
+            var resultStr = new StringBuilder();
             
             Add("append", (variables, parameters) =>
             {
-                chars.Add((char) Convert.ToInt32(parameters[0]));
+                resultStr.Append(parameters.ParametersToString());
             });
             
             Add("print", (variables, parameters) =>
             {
-                engine.Terminal.Print(new string(chars.ToArray()));
+                engine.Terminal.Print(resultStr.ToString());
             });
             
             Add("clear", (variables, parameters) =>
             {
-                chars.Clear();
+                resultStr.Clear();
             });
         }
     }

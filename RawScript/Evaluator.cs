@@ -22,8 +22,6 @@ namespace RawScript
         private readonly Dictionary<int, int> orTokens;
         private readonly Dictionary<int, int> xorTokens;
 
-        private readonly CultureInfo cultureInfo;
-
         public Evaluator()
         {
             multiplicationTokens = new Dictionary<int, int>();
@@ -40,9 +38,11 @@ namespace RawScript
             orTokens = new Dictionary<int, int>(); 
             xorTokens = new Dictionary<int, int>();
 
-            cultureInfo = (CultureInfo) CultureInfo.CurrentCulture.Clone();
-            cultureInfo.NumberFormat.CurrencyDecimalSeparator = ".";
+            CultureInfo = (CultureInfo) CultureInfo.CurrentCulture.Clone();
+            CultureInfo.NumberFormat.CurrencyDecimalSeparator = ".";
         }
+        
+        public CultureInfo CultureInfo { get; }
         
         public object Evaluate(string expression)
         {
@@ -118,7 +118,7 @@ namespace RawScript
                 return resultAsBoolean;
             }
 
-            if (float.TryParse(expression, NumberStyles.Any, cultureInfo, out var resultAsSingle))
+            if (float.TryParse(expression, NumberStyles.Any, CultureInfo, out var resultAsSingle))
             {
                 return resultAsSingle;
             }
@@ -268,7 +268,7 @@ namespace RawScript
 
                 var clearedExpression = expression.Remove(tokenPosition, length);
 
-                if (float.TryParse(a, NumberStyles.Any, cultureInfo, out var aTestA) && float.TryParse(b, NumberStyles.Any, cultureInfo, out var bTestA))
+                if (float.TryParse(a, NumberStyles.Any, CultureInfo, out var aTestA) && float.TryParse(b, NumberStyles.Any, CultureInfo, out var bTestA))
                 {
                     return GetLocalResult(operation, clearedExpression, tokenPosition, aTestA, bTestA);
                 }
@@ -284,7 +284,7 @@ namespace RawScript
 
         private static string GetLocalResult(Operation operation, string expression, int tokenPosition, object a, object b)
         {
-            return expression.Insert(tokenPosition, EvaluateOperation(operation, a, b).ToString());
+            return expression.Insert(tokenPosition, EvaluateOperation(operation, a, b).ToInvariantString());
         }
         
         private static object EvaluateOperation(Operation operation, object a, object b)

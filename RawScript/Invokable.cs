@@ -355,13 +355,13 @@ namespace RawScript
                 var token = inputTokens[index];
                 if (ContainsLocal(token, out var holder))
                 {
-                    resultTokens.Add(holder.Locals[token].ToString());
+                    resultTokens.Add(holder.Locals[token].ToInvariantString());
                     continue;
                 }
 
                 if (inputVariables.ContainsKey(token))
                 {
-                    resultTokens.Add(inputVariables[token].ToString());
+                    resultTokens.Add(inputVariables[token].ToInvariantString());
                     continue;
                 }
                 
@@ -384,7 +384,7 @@ namespace RawScript
 
                     index++;
                     var parameters = GetParameters(ref index, inputTokens, inputVariables);
-                    resultTokens.Add(Engine.InvokeInternalFunction(functionBuilder.ToString(), parameters).ToString());
+                    resultTokens.Add(Engine.InvokeInternalFunction(functionBuilder.ToString(), parameters).ToInvariantString());
                     continue;
                 }
 

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Text;
 
 namespace RawScript
 {
@@ -162,6 +164,27 @@ namespace RawScript
             }
 
             return false;
+        }
+
+        public static string ParametersToString(this IEnumerable<object> parameters)
+        {
+            var pathBuilder = new StringBuilder();
+            foreach (var parameter in parameters)
+            {
+                pathBuilder.Append((char)Convert.ToInt32(parameter));
+            }
+
+            return pathBuilder.ToString();
+        }
+        
+        public static string ToInvariantString(this object token)
+        {
+            if (token is float number)
+            {
+                return number.ToString(CultureInfo.InvariantCulture);
+            }
+
+            return token.ToString();
         }
         
         public static bool IsClosing(this string token)
